@@ -16,82 +16,125 @@ const Index = () => {
       {/* Print styles */}
       <style>{`
         @media print {
-          * { -webkit-print-color-adjust: exact; color-adjust: exact; }
-          body { margin: 0; padding: 0; font-size: 12px; line-height: 1.3; }
+          * { 
+            -webkit-print-color-adjust: exact; 
+            color-adjust: exact; 
+            box-sizing: border-box;
+          }
+          @page {
+            size: 8.5in 11in;
+            margin: 0.5in;
+          }
+          body { 
+            margin: 0; 
+            padding: 0; 
+            font-size: 10px; 
+            line-height: 1.2; 
+            color: #000 !important;
+            background: white !important;
+          }
           .print-container { 
             max-width: none !important; 
             margin: 0 !important; 
-            padding: 0.4in !important;
+            padding: 0 !important;
             min-height: auto !important;
             height: auto !important;
+            background: white !important;
+            box-shadow: none !important;
           }
           .print-grid { 
             display: grid !important; 
-            grid-template-columns: 2.2in 5.3in !important; 
+            grid-template-columns: 2.4in 5.1in !important; 
             gap: 0 !important;
             height: auto !important;
             min-height: auto !important;
           }
           .print-sidebar { 
-            padding: 0.3in 0.25in !important; 
-            font-size: 11px !important;
+            padding: 0.2in !important; 
+            font-size: 9px !important;
+            background: #f8f9fa !important;
           }
           .print-main { 
-            padding: 0.3in 0.25in !important; 
-            font-size: 11px !important;
+            padding: 0.2in !important; 
+            font-size: 9px !important;
+            background: white !important;
           }
           .print-name { 
-            font-size: 20px !important; 
-            line-height: 1.1 !important; 
-            margin-bottom: 8px !important; 
-          }
-          .print-title { 
-            font-size: 10px !important; 
-            padding: 4px 8px !important; 
-            margin-bottom: 16px !important; 
+            font-size: 18px !important; 
+            line-height: 1 !important; 
+            margin-bottom: 6px !important; 
+            color: #000 !important;
           }
           .print-section { 
-            margin-bottom: 16px !important; 
+            margin-bottom: 12px !important; 
           }
           .print-section-header { 
-            font-size: 12px !important; 
-            margin-bottom: 8px !important; 
+            font-size: 10px !important; 
+            margin-bottom: 6px !important; 
+            color: #000 !important;
+            font-weight: 600 !important;
           }
           .print-job { 
-            margin-bottom: 14px !important; 
+            margin-bottom: 10px !important; 
           }
           .print-job-title { 
-            font-size: 13px !important; 
-            margin-bottom: 2px !important; 
+            font-size: 11px !important; 
+            margin-bottom: 1px !important; 
+            color: #000 !important;
           }
           .print-company { 
-            font-size: 11px !important; 
-            margin-bottom: 4px !important; 
+            font-size: 9px !important; 
+            margin-bottom: 2px !important; 
+            color: #666 !important;
           }
           .print-job-details { 
-            font-size: 9px !important; 
-            margin-bottom: 6px !important; 
+            font-size: 8px !important; 
+            margin-bottom: 4px !important; 
+            color: #666 !important;
           }
           .print-bullet { 
-            font-size: 10px !important; 
-            line-height: 1.2 !important; 
-            margin-bottom: 3px !important; 
+            font-size: 8px !important; 
+            line-height: 1.1 !important; 
+            margin-bottom: 2px !important; 
+            color: #333 !important;
           }
           .print-skill { 
-            font-size: 10px !important; 
-            line-height: 1.3 !important; 
-            margin-bottom: 2px !important; 
+            font-size: 8px !important; 
+            line-height: 1.2 !important; 
+            margin-bottom: 1px !important; 
+            color: #333 !important;
           }
           .print-contact { 
-            font-size: 10px !important; 
-            margin-bottom: 4px !important; 
+            font-size: 8px !important; 
+            margin-bottom: 3px !important; 
+            color: #333 !important;
+          }
+          .print-summary { 
+            font-size: 9px !important; 
+            line-height: 1.2 !important; 
+            margin-bottom: 10px !important; 
+            color: #333 !important;
+          }
+          .print-education-item { 
+            margin-bottom: 8px !important; 
+          }
+          .print-skill-category { 
+            margin-bottom: 6px !important; 
+          }
+          .print-skill-title { 
+            font-size: 9px !important; 
+            font-weight: 600 !important; 
+            margin-bottom: 2px !important; 
+            color: #000 !important;
           }
           .print-break-inside-avoid { break-inside: avoid; }
           .print-break-before { break-before: page; }
           .no-print { display: none !important; }
-          
-          /* Hide icons in print for space saving */
           .print-hide { display: none !important; }
+          
+          /* Hide Lovable watermark and other elements */
+          iframe, .lovable-badge, [data-testid="lovable-badge"] { display: none !important; }
+          header:has([href*="lovable"]) { display: none !important; }
         }
       `}</style>
 
@@ -101,13 +144,23 @@ const Index = () => {
           <aside className="lg:col-span-1 bg-secondary/30 p-8 print-sidebar">
             {/* Header */}
             <header className="mb-8 print-section print-break-inside-avoid">
-              <h1 className="text-3xl font-bold text-primary mb-2 leading-tight print-name">
+              <h1 className="text-3xl font-bold text-primary mb-4 leading-tight print-name">
                 RHODA<br />JACKSON
               </h1>
-              <div className="inline-block bg-coral text-coral-foreground px-4 py-2 rounded-full text-sm font-medium print-title">
-                Graphic Designer
-              </div>
             </header>
+
+            {/* Summary */}
+            <section className="mb-8 print-section print-break-inside-avoid">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-coral/20 rounded-full flex items-center justify-center print-hide">
+                  <Star className="w-4 h-4 text-coral" />
+                </div>
+                <h2 className="text-lg font-semibold text-primary print-section-header">SUMMARY</h2>
+              </div>
+              <p className="text-sm text-muted-foreground print-summary">
+                Creative graphic designer with 4+ years of experience in digital marketing, motion graphics, and brand development. Proven track record of improving campaign performance and leading cross-functional design initiatives at leading technology companies.
+              </p>
+            </section>
 
             {/* Contact */}
             <section className="mb-8 print-section print-break-inside-avoid">
@@ -145,16 +198,30 @@ const Index = () => {
                 </div>
                 <h2 className="text-lg font-semibold text-primary print-section-header">EDUCATION</h2>
               </div>
-              <div className="space-y-2">
-                <h3 className="font-semibold text-primary">B.F.A. Visual Arts</h3>
-                <p className="text-coral font-medium">University of Chicago</p>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Calendar className="w-3 h-3" />
-                  <span>2016 - 2020</span>
+              <div className="space-y-4">
+                <div className="print-education-item">
+                  <h3 className="font-semibold text-primary text-sm">B.F.A. Visual Arts</h3>
+                  <p className="text-coral font-medium text-sm">University of Chicago</p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Calendar className="w-3 h-3 print-hide" />
+                    <span>2016 - 2020</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <MapPin className="w-3 h-3 print-hide" />
+                    <span>Chicago, IL</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MapPin className="w-3 h-3" />
-                  <span>Chicago, IL</span>
+                <div className="print-education-item">
+                  <h3 className="font-semibold text-primary text-sm">Certificate in Digital Marketing</h3>
+                  <p className="text-coral font-medium text-sm">Google Digital Academy</p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Calendar className="w-3 h-3 print-hide" />
+                    <span>2021</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <MapPin className="w-3 h-3 print-hide" />
+                    <span>Online</span>
+                  </div>
                 </div>
               </div>
             </section>
@@ -167,23 +234,24 @@ const Index = () => {
                 </div>
                 <h2 className="text-lg font-semibold text-primary print-section-header">SKILLS</h2>
               </div>
-              <ul className="space-y-2 text-sm">
-                {[
-                  "Adobe Photoshop",
-                  "Adobe Illustrator", 
-                  "Adobe After Effects",
-                  "Adobe InDesign",
-                  "Adobe Premiere Pro",
-                  "Facebook / Instagram / TikTok",
-                  "HTML / CSS",
-                  "Microsoft Word / PowerPoint"
-                ].map((skill, index) => (
-                  <li key={index} className="flex items-center gap-2 print-skill">
-                    <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 print-hide"></div>
-                    <span className="text-muted-foreground">{skill}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="space-y-4">
+                <div className="print-skill-category">
+                  <h3 className="print-skill-title text-primary font-semibold text-xs mb-2">Design Software</h3>
+                  <p className="text-xs text-muted-foreground print-skill">Adobe Photoshop, Illustrator, After Effects, InDesign, Premiere Pro</p>
+                </div>
+                <div className="print-skill-category">
+                  <h3 className="print-skill-title text-primary font-semibold text-xs mb-2">Programming Languages</h3>
+                  <p className="text-xs text-muted-foreground print-skill">HTML, CSS, JavaScript</p>
+                </div>
+                <div className="print-skill-category">
+                  <h3 className="print-skill-title text-primary font-semibold text-xs mb-2">Social Media Platforms</h3>
+                  <p className="text-xs text-muted-foreground print-skill">Facebook, Instagram, TikTok</p>
+                </div>
+                <div className="print-skill-category">
+                  <h3 className="print-skill-title text-primary font-semibold text-xs mb-2">Office Suite</h3>
+                  <p className="text-xs text-muted-foreground print-skill">Microsoft Word, PowerPoint, Excel</p>
+                </div>
+              </div>
             </section>
           </aside>
 
@@ -224,15 +292,7 @@ const Index = () => {
                   </li>
                   <li className="flex items-start gap-2 print-bullet">
                     <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
-                    <span>Integrated music, voice-over, and sound effects to enhance video content</span>
-                  </li>
-                  <li className="flex items-start gap-2 print-bullet">
-                    <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
                     <span><strong>Designed over 120 static and video assets</strong>, nearly all included in public campaign efforts</span>
-                  </li>
-                  <li className="flex items-start gap-2 print-bullet">
-                    <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
-                    <span>Organized a cross-functional workshop on the importance of visual design in UI</span>
                   </li>
                 </ul>
               </article>
@@ -264,54 +324,66 @@ const Index = () => {
                   </li>
                   <li className="flex items-start gap-2 print-bullet">
                     <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
-                    <span>Developed original graphics for public health campaign reaching over 80,664 community members</span>
-                  </li>
-                  <li className="flex items-start gap-2 print-bullet">
-                    <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
-                    <span>Mentored and instructed a small team of six junior designers</span>
-                  </li>
-                  <li className="flex items-start gap-2 print-bullet">
-                    <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
-                    <span>Implemented A/B testing framework for ads, <strong>slashing cost per acquisition by 18%</strong></span>
+                    <span><strong>Implemented A/B testing framework for ads, slashing cost per acquisition by 18%</strong></span>
                   </li>
                 </ul>
               </article>
+            </div>
 
-              {/* Emanate */}
-              <article className="print-job print-break-inside-avoid">
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold text-primary mb-1 print-job-title">Graphic Design Intern</h3>
-                  <p className="text-coral font-medium mb-2 print-company">Emanate</p>
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4 print-job-details">
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3 print-hide" />
-                      <span>2020 - 2021</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3 print-hide" />
-                      <span>San Francisco, CA</span>
-                    </div>
-                  </div>
+            {/* Projects Section */}
+            <div className="mt-8">
+              <div className="flex items-center gap-2 mb-6">
+                <div className="w-8 h-8 bg-coral/20 rounded-full flex items-center justify-center print-hide">
+                  <ExternalLink className="w-4 h-4 text-coral" />
                 </div>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-start gap-2 print-bullet">
-                    <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
-                    <span>Built concepts and designs for 17 clients using Adobe Photoshop & Illustrator</span>
-                  </li>
-                  <li className="flex items-start gap-2 print-bullet">
-                    <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
-                    <span>Designed elements for and edited PowerPoint presentations for CEO and 52-person company</span>
-                  </li>
-                  <li className="flex items-start gap-2 print-bullet">
-                    <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
-                    <span>Produced Facebook and Instagram visual content, <strong>receiving over 1,628 points of engagement</strong></span>
-                  </li>
-                  <li className="flex items-start gap-2 print-bullet">
-                    <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
-                    <span>Revamped company logo and business cards, boosting brand image</span>
-                  </li>
-                </ul>
-              </article>
+                <h2 className="text-xl font-semibold text-primary print-section-header">PROJECTS</h2>
+              </div>
+
+              <div className="space-y-6">
+                {/* Project 1 */}
+                <article className="print-job print-break-inside-avoid">
+                  <div className="mb-3">
+                    <h3 className="text-lg font-semibold text-primary mb-1 print-job-title">Brand Identity Redesign</h3>
+                    <p className="text-coral font-medium mb-2 print-company">Healthcare Startup Rebranding</p>
+                  </div>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2 print-bullet">
+                      <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
+                      <span>Led complete visual identity overhaul for emerging healthcare technology company</span>
+                    </li>
+                    <li className="flex items-start gap-2 print-bullet">
+                      <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
+                      <span>Created cohesive brand guidelines, logo system, and marketing collateral</span>
+                    </li>
+                    <li className="flex items-start gap-2 print-bullet">
+                      <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
+                      <span><strong>Resulted in 45% increase in brand recognition</strong> and improved investor engagement</span>
+                    </li>
+                  </ul>
+                </article>
+
+                {/* Project 2 */}
+                <article className="print-job print-break-inside-avoid">
+                  <div className="mb-3">
+                    <h3 className="text-lg font-semibold text-primary mb-1 print-job-title">Interactive Dashboard Design</h3>
+                    <p className="text-coral font-medium mb-2 print-company">Data Visualization Platform</p>
+                  </div>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2 print-bullet">
+                      <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
+                      <span>Designed user-friendly interface for complex data analytics platform</span>
+                    </li>
+                    <li className="flex items-start gap-2 print-bullet">
+                      <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
+                      <span>Created intuitive navigation and data visualization components</span>
+                    </li>
+                    <li className="flex items-start gap-2 print-bullet">
+                      <div className="w-1.5 h-1.5 bg-coral rounded-full flex-shrink-0 mt-2 print-hide"></div>
+                      <span><strong>Improved user task completion rate by 60%</strong> and reduced training time</span>
+                    </li>
+                  </ul>
+                </article>
+              </div>
             </div>
           </main>
         </div>
